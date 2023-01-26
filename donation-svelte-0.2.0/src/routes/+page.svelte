@@ -1,8 +1,11 @@
 <script>
-	import Headder from '$lib/Headder.svelte';
+	import Header from '$lib/Header.svelte';
+	import WelcomeNavigator from '$lib/WelcomeNavigator.svelte';
 </script>
 
-<Headder />
+<Header>
+	<WelcomeNavigator />
+</Header>
 
 <div class="columns is-vcentered content">
 	<div class="column has-text-centered">

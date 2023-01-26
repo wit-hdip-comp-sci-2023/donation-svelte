@@ -1,14 +1,21 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto } from "$app/navigation";
+	import { donationService } from "../services/donation-service";
 
-	let firstName = '';
-	let lastName = '';
-	let email = '';
-	let password = '';
+	let firstName = "";
+	let lastName = "";
+	let email = "";
+	let password = "";
+	let errorMessage = "";
 
 	async function signup() {
 		console.log(`attemting to sign up email: ${email}`);
-		goto('/');
+		let success = await donationService.signup(firstName, lastName, email, password);
+		if (success) {
+			goto("/");
+		} else {
+			errorMessage = "Error Trying to sign up";
+		}
 	}
 </script>
 
@@ -37,3 +44,8 @@
 		<button class="button is-link">Sign Up</button>
 	</div>
 </form>
+{#if errorMessage}
+	<div class="section">
+		{errorMessage}
+	</div>
+{/if}

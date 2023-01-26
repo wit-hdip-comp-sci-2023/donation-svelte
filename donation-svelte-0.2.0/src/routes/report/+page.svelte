@@ -1,9 +1,12 @@
 <script>
-	import Headder from '$lib/Headder.svelte';
+	import Header from '$lib/Header.svelte';
+	import MainNavigator from '$lib/MainNavigator.svelte';
 	import DonationList from '$lib/DonationList.svelte';
 </script>
 
-<Headder />
+<Header>
+	<MainNavigator />
+</Header>
 
 <div class="columns">
 	<div class="column has-text-centered">
