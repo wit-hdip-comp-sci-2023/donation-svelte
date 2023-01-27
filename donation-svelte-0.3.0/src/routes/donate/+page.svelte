@@ -1,7 +1,13 @@
 <script>
-	import Header from '$lib/Header.svelte';
-	import DonateForm from '$lib/DonateForm.svelte';
-	import MainNavigator from '$lib/MainNavigator.svelte';
+	import Header from "$lib/Header.svelte";
+	import DonateForm from "$lib/DonateForm.svelte";
+	import MainNavigator from "$lib/MainNavigator.svelte";
+	import { beforeUpdate } from "svelte";
+	import { donationService } from "../../services/donation-service";
+
+	beforeUpdate(() => {
+		donationService.checkPageRefresh();
+	});
 </script>
 
 <Header>

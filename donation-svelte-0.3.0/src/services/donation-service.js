@@ -1,5 +1,5 @@
-import axios from "axios";
 import { goto } from "$app/navigation";
+import axios from "axios";
 import { user } from "../stores";
 
 export const donationService = {
@@ -48,15 +48,17 @@ export const donationService = {
 		}
 	},
 
-	reload() {
-		const donationCredentials = localStorage.donation;
-		if (donationCredentials) {
-			const savedUser = JSON.parse(donationCredentials);
-			user.set({
-				email: savedUser.email,
-				token: savedUser.token
-			});
-			goto("/donate");
+	checkPageRefresh() {
+		if (!axios.defaults.headers.common["Authorization"]) {
+			const donationCredentials = localStorage.donation;
+			if (donationCredentials) {
+				const savedUser = JSON.parse(donationCredentials);
+				user.set({
+					email: savedUser.email,
+					token: savedUser.token
+				});
+				axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
+			}
 		}
 	},
 
