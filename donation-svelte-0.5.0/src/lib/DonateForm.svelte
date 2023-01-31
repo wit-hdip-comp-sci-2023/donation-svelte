@@ -10,7 +10,7 @@
 	let candidateList = [];
 	let selectedCandidate = "";
 
-	let paymentMethods = ["Paypal", "Cash"];
+	let paymentMethods = ["paypal", "direct"];
 	let selectedMethod = "";
 
 	let message = "Please donate";
