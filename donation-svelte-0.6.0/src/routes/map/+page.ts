@@ -1,3 +1,4 @@
+import { getMarkerLayer } from "../../services/donation-utils";
 import { donationService } from "./../../services/donation-service";
 export const ssr = false;
 
@@ -6,6 +7,6 @@ export const load = async ({ params }) => {
 	const allDonations = await donationService.getDonations();
 	return {
 		donations: allDonations,
-		donationMarkerLayer: donationService.getMarkerLayer(allDonations)
+		donationMarkerLayer: getMarkerLayer(allDonations)
 	};
 };

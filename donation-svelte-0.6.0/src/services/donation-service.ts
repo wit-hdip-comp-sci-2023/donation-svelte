@@ -66,7 +66,7 @@ export const donationService = {
 
 	async donate(donation: Donation) {
 		try {
-			const response = await axios.post(this.baseUrl + "/api/candidates/" + donation.candidate + "/donations", donation);
+			const response = await axios.post(this.baseUrl + "/api/candidates/" + donation.candidate._id + "/donations", donation);
 			latestDonation.set(donation);
 			return response.status == 200;
 		} catch (error) {
@@ -112,17 +112,5 @@ export const donationService = {
 			donationsByCandidate.push(donations);
 		}
 		return donationsByCandidate;
-	},
-
-	getMarkerLayer(donations: Donation[]): MarkerLayer {
-		const markerSpecs = Array<MarkerSpec>();
-		donations.forEach((donation) => {
-			markerSpecs.push({
-				id: donation._id,
-				title: donation.candidate.firstName,
-				location: new LatLng(donation.lat, donation.lng)
-			});
-		});
-		return { title: "donations", markerSpecs: markerSpecs };
 	}
 };

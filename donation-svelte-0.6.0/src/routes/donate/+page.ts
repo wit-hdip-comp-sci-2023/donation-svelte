@@ -5,7 +5,6 @@ export const load = async ({ params }) => {
 	donationService.checkPageRefresh();
 
 	return {
-		donations: await donationService.getDonations(),
 		donationsByCandidate: await donationService.getDonationsByAllCandidates(),
 		candidateList: await donationService.getCandidates()
 	};
