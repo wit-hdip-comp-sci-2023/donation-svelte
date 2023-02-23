@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Header from "$lib/Header.svelte";
 	import MainNavigator from "$lib/MainNavigator.svelte";
-	import DonationList from "$lib/DonationList.svelte";
+	import DonateForm from "./DonateForm.svelte";
 	import DonationsByCandidate from "$lib/DonationsByCandidate.svelte";
 	import type { PageData } from "./$types";
 	export let data: PageData;
@@ -17,6 +17,6 @@
 	</div>
 	<div class="column box has-text-centered">
 		<h1 class="title is-4">Donations to date</h1>
-		<DonationList donations={data.donations} />
+		<DonateForm candidateList={data.candidateList} />
 	</div>
 </div>

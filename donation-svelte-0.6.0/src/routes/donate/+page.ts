@@ -6,6 +6,7 @@ export const load = async ({ params }) => {
 
 	return {
 		donations: await donationService.getDonations(),
-		donationsByCandidate: await donationService.getDonationsByAllCandidates()
+		donationsByCandidate: await donationService.getDonationsByAllCandidates(),
+		candidateList: await donationService.getCandidates()
 	};
 };

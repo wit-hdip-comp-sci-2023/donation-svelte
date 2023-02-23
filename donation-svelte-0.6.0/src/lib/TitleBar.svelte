@@ -14,7 +14,7 @@
 	</div>
 	<div class="column">
 		<i class="fas fa-donate fa-3x" style="color:rgb(95, 96, 173)" />
-		{#if $user.email}
+		{#if $user?.email}
 			<div class="is-size-7">{$user.email}</div>
 		{:else}
 			<div class="is-size-7">Donation-Svelte 0.2</div>
