@@ -28,3 +28,8 @@ export interface Donation {
 	lng: number;
 	_id: string;
 }
+
+export interface CandidateDonations {
+	candidate: Candidate;
+	donations: Donation[];
+}

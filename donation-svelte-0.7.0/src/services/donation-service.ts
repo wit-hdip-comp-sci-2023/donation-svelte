@@ -1,6 +1,6 @@
 import axios from "axios";
 import { latestDonation, loggedInUser } from "../stores";
-import type { Candidate, Donation } from "./donation-types";
+import type { Candidate, CandidateDonations, Donation } from "./donation-types";
 
 export const donationService = {
 	baseUrl: "http://localhost:4000",
@@ -100,5 +100,18 @@ export const donationService = {
 		} catch (error) {
 			return [];
 		}
+	},
+
+	async getDonationsByCandidates(): Promise<CandidateDonations[]> {
+		const donationsByCandidate: CandidateDonations[] = [];
+		const candidates = await donationService.getCandidates();
+		for (let i = 0; i < candidates.length; i++) {
+			const donations = {
+				candidate: candidates[i],
+				donations: await donationService.getDonationsByCandidate(candidates[i])
+			};
+			donationsByCandidate.push(donations);
+		}
+		return donationsByCandidate;
 	}
 };

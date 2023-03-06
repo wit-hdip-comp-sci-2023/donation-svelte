@@ -3,8 +3,8 @@ import axios from "axios";
 import { latestDonation, user } from "../stores";
 
 export const donationService = {
-	// baseUrl: "http://localhost:4000",
-	baseUrl: "https://playtime-0-6-0.onrender.com",
+	baseUrl: "http://localhost:4000",
+	//baseUrl: "https://playtime-0-6-0.onrender.com",
 
 	async login(email, password) {
 		try {
