@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import "leaflet/dist/leaflet.css";
 	import { LeafletMap } from "../services/leaflet-map";
 	import { onMount } from "svelte";
