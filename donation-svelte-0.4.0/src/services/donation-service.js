@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import axios from "axios";
 import { latestDonation, user } from "../stores";
 
@@ -47,17 +49,15 @@ export const donationService = {
 		}
 	},
 
-	checkPageRefresh() {
-		if (!axios.defaults.headers.common["Authorization"]) {
-			const donationCredentials = localStorage.donation;
-			if (donationCredentials) {
-				const savedUser = JSON.parse(donationCredentials);
-				user.set({
-					email: savedUser.email,
-					token: savedUser.token
-				});
-				axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
-			}
+	reload() {
+		const donationCredentials = localStorage.donation;
+		if (donationCredentials) {
+			const savedUser = JSON.parse(donationCredentials);
+			user.set({
+				email: savedUser.email,
+				token: savedUser.token
+			});
+			axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
 		}
 	},
 

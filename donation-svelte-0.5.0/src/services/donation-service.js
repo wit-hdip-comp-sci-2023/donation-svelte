@@ -1,10 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import axios from "axios";
 import { latestDonation, user } from "../stores";
 
 export const donationService = {
-	baseUrl: "http://localhost:4000",
-	//baseUrl: "https://playtime-0-6-0.onrender.com",
+	//	baseUrl: "http://localhost:4000",
+	baseUrl: "https://donation-service.glitch.me",
 
 	async login(email, password) {
 		try {
@@ -49,21 +50,18 @@ export const donationService = {
 		}
 	},
 
-	checkPageRefresh() {
-		if (!axios.defaults.headers.common["Authorization"]) {
-			const donationCredentials = localStorage.donation;
-			if (donationCredentials) {
-				const savedUser = JSON.parse(donationCredentials);
-				user.set({
-					email: savedUser.email,
-					token: savedUser.token
-				});
-				axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
-			}
+	reload() {
+		const donationCredentials = localStorage.donation;
+		if (donationCredentials) {
+			const savedUser = JSON.parse(donationCredentials);
+			user.set({
+				email: savedUser.email,
+				token: savedUser.token
+			});
+			axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
 		}
 	},
 
-	// @ts-ignore
 	async donate(donation) {
 		try {
 			const response = await axios.post(this.baseUrl + "/api/candidates/" + donation.candidate + "/donations", donation);

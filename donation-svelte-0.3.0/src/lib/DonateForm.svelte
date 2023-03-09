@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import { onMount } from "svelte";
 	import { donationService } from "../services/donation-service";
 

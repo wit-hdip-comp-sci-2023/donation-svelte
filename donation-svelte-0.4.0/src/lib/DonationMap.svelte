@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import "leaflet/dist/leaflet.css";
 	import { LeafletMap } from "../services/leaflet-map";
 	import { onMount } from "svelte";
@@ -36,4 +38,4 @@
 	});
 </script>
 
-<div class="box" id="donation-map" style="height:800px" />
+<div class="box" id="donation-map" style="height: 75vh" />

@@ -1,7 +1,7 @@
 <script>
+	// @ts-nocheck
 	import Chart from "svelte-frappe-charts";
 	import { onMount } from "svelte";
-
 	import { donationService } from "../services/donation-service";
 
 	let totalByMethod = {

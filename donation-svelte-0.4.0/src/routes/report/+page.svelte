@@ -2,12 +2,6 @@
 	import Header from "$lib/Header.svelte";
 	import MainNavigator from "$lib/MainNavigator.svelte";
 	import DonationList from "$lib/DonationList.svelte";
-	import { beforeUpdate } from "svelte";
-	import { donationService } from "../../services/donation-service";
-
-	beforeUpdate(() => {
-		donationService.checkPageRefresh();
-	});
 </script>
 
 <Header>

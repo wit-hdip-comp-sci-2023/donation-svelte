@@ -1,10 +1,8 @@
 <script>
-	import { goto } from "$app/navigation";
-	import { onMount } from "svelte";
+	import { beforeUpdate } from "svelte";
 	import { donationService } from "../services/donation-service";
-	import { user } from "../stores";
 
-	onMount(async () => {
+	beforeUpdate(() => {
 		donationService.reload();
 	});
 </script>
