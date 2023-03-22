@@ -65,7 +65,7 @@ export const donationService = {
 		}
 	},
 
-	async donate(donation: Donation) {
+	async donate(donation: Donation): Promise<boolean> {
 		try {
 			const response = await axios.post(this.baseUrl + "/api/candidates/" + donation.candidate._id + "/donations", donation);
 			latestDonation.set(donation);

@@ -6,14 +6,15 @@
 	let amount = 0;
 	let lat = 52.160858;
 	let lng = -7.15242;
-
-	let candidateList = [];
 	let selectedCandidate = "";
-
 	let paymentMethods = ["paypal", "direct"];
 	let selectedMethod = "";
-
 	let message = "Please donate";
+
+	/**
+	 * @type {any[]}
+	 */
+	let candidateList = [];
 
 	onMount(async () => {
 		candidateList = await donationService.getCandidates();

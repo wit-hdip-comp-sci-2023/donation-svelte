@@ -4,8 +4,6 @@
 	import { loggedInUser } from "../stores";
 	import Coordinates from "$lib/Coordinates.svelte";
 
-	export let candidateList: Candidate[] = [];
-
 	let amount = 0;
 	let lat = 52.160858;
 	let lng = -7.15242;
@@ -13,6 +11,8 @@
 	let paymentMethods = ["paypal", "direct"];
 	let selectedMethod = "";
 	let message = "Please donate";
+
+	export let candidateList: Candidate[] = [];
 
 	async function donate() {
 		if (selectedCandidate && amount && selectedMethod) {
