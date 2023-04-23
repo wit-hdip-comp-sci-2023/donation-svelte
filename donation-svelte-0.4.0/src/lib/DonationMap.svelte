@@ -31,8 +31,10 @@
 		map.moveTo(8, { lat: donation.lat, lng: donation.lng });
 	}
 
-	latestDonation.subscribe((donation) => {
+	latestDonation.subscribe(async (donation) => {
 		if (donation && map) {
+			const candidate = await donationService.getCandidate(donation.candidate);
+			donation.candidate = candidate;
 			addDonationMarker(map, donation);
 		}
 	});

@@ -80,6 +80,15 @@ export const donationService = {
 		}
 	},
 
+	async getCandidate(id) {
+		try {
+			const response = await axios.get(this.baseUrl + "/api/candidates/" + id);
+			return response.data;
+		} catch (error) {
+			return [];
+		}
+	},
+
 	async getDonations() {
 		try {
 			const response = await axios.get(this.baseUrl + "/api/donations");
