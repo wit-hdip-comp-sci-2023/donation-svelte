@@ -1,3 +1,3 @@
 <div class="box">
-  <p> List of Donations here</p>
+  <p>List of Donations here</p>
 </div>
