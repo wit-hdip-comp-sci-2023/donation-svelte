@@ -1,5 +1,5 @@
 import axios from "axios";
-import { latestDonation, loggedInUser } from "../stores";
+import { latestDonation, loggedInUser } from "$lib/stores";
 import type { Candidate, CandidateDonations, Donation } from "./donation-types";
 
 export const donationService = {

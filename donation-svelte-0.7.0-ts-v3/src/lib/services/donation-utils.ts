@@ -1,17 +1,26 @@
-import { LatLng } from "leaflet";
 import type { ChartData } from "./charts";
 import type { CandidateDonations, Donation } from "./donation-types";
 import type { MarkerLayer, MarkerSpec } from "./markers";
 
-export function getMarkerLayer(donations: Donation[]): MarkerLayer {
+export function generateMarker(donation: Donation): MarkerSpec {
+  return {
+    id: donation._id,
+    title: `${donation.candidate.firstName} ${donation.candidate.lastName}: €${donation.amount}`,
+    location: { lat: donation.lat, lng: donation.lng },
+    popup: true
+  };
+}
+
+export function populateMarkerLayer(donations: Donation[]): MarkerLayer {
   const markerSpecs = Array<MarkerSpec>();
   donations.forEach((donation) => {
-    markerSpecs.push({
-      id: donation._id,
-      title: `${donation.candidate.firstName} ${donation.candidate.lastName}: €${donation.amount}`,
-      location: new LatLng(donation.lat, donation.lng),
-      popup: true
-    });
+    markerSpecs.push(generateMarker(donation));
+    // markerSpecs.push({
+    //   id: donation._id,
+    //   title: `${donation.candidate.firstName} ${donation.candidate.lastName}: €${donation.amount}`,
+    //   location: new LatLng(donation.lat, donation.lng),
+    //   popup: true
+    // });
   });
   return { title: "donations", markerSpecs: markerSpecs };
 }

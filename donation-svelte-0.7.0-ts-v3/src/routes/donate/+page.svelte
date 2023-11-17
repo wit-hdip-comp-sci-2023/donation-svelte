@@ -1,24 +1,20 @@
 <script lang="ts">
-  import Header from "$lib/Header.svelte";
-  import MainNavigator from "$lib/MainNavigator.svelte";
-  import { onMount } from "svelte";
-  import { donationService } from "../../services/donation-service";
-  import type { Candidate, Donation } from "../../services/donation-types";
-  import DonateForm from "../../lib/DonateForm.svelte";
-  import DonationList from "$lib/DonationList.svelte";
-  import { latestDonation } from "../../stores";
+  import Header from "$lib/ui/Header.svelte";
+  import MainNavigator from "$lib/ui/MainNavigator.svelte";
 
-  let candidateList: Candidate[] = [];
-  let donations: Donation[] = [];
+  import type { Candidate, Donation } from "$lib/services/donation-types";
+  import DonateForm from "$lib/ui/DonateForm.svelte";
+  import DonationList from "$lib/ui/DonationList.svelte";
+  import { latestDonation } from "$lib/stores";
 
-  onMount(async () => {
-    donationService.checkPageRefresh();
-    candidateList = await donationService.getCandidates();
-    donations = await donationService.getDonations();
-  });
+  export let data: any;
 
+  let donations: Donation[] = data.donations;
   latestDonation.subscribe(async (donation) => {
-    donations = await donationService.getDonations();
+    if (donation) {
+      donations.push(donation);
+      donations = [...donations];
+    }
   });
 </script>
 
@@ -33,6 +29,6 @@
   </div>
   <div class="column box has-text-centered">
     <h1 class="title is-4">Make a Donation</h1>
-    <DonateForm {candidateList} />
+    <DonateForm candidateList={data.candidateList} />
   </div>
 </div>

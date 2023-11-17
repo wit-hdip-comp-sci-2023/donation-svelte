@@ -1,19 +1,17 @@
 <script lang="ts">
   // @ts-ignore
   import Chart from "svelte-frappe-charts";
-  import Header from "$lib/Header.svelte";
-  import MainNavigator from "$lib/MainNavigator.svelte";
-  import type { ChartData } from "../../services/charts";
+  import Header from "$lib/ui/Header.svelte";
+  import MainNavigator from "$lib/ui/MainNavigator.svelte";
+  import type { ChartData } from "$lib/services/charts";
   import { onMount } from "svelte";
-  import { donationService } from "../../services/donation-service";
-  import { generateByCandidate, generateByMethod } from "../../services/donation-utils";
+  import { donationService } from "$lib/services/donation-service";
+  import { generateByCandidate, generateByMethod } from "$lib/services/donation-utils";
 
   let byCandidate: ChartData;
   let byMethod: ChartData;
 
   onMount(async () => {
-    donationService.checkPageRefresh();
-
     const donations = await donationService.getDonations();
     const donationsByCandidate = await donationService.getDonationsByCandidates();
     byMethod = generateByMethod(donations);

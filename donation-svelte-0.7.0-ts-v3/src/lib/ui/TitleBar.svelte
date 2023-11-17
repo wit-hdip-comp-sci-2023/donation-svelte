@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loggedInUser } from "../stores";
+  import { loggedInUser } from "$lib/stores";
   export let title = "";
   export let subTitle = "";
 </script>

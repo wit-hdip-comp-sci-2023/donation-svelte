@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { donationService } from "../services/donation-service";
-  import type { Candidate } from "../services/donation-types";
-  import { loggedInUser } from "../stores";
-  import Coordinates from "$lib/Coordinates.svelte";
+  import { donationService } from "$lib/services/donation-service";
+  import type { Candidate } from "$lib/services/donation-types";
+  import { loggedInUser } from "$lib/stores";
+  import Coordinates from "$lib/ui/Coordinates.svelte";
 
   export let candidateList: Candidate[] = [];
 

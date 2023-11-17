@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { donationService } from "../../services/donation-service";
+  import { donationService } from "$lib/services/donation-service";
 
   let email = "";
   let password = "";

@@ -1,43 +1,38 @@
 <script lang="ts">
   // @ts-ignore
   import Chart from "svelte-frappe-charts";
-  import Header from "$lib/Header.svelte";
-  import MainNavigator from "$lib/MainNavigator.svelte";
-  import type { ChartData } from "../../services/charts";
+  import Header from "$lib/ui/Header.svelte";
+  import MainNavigator from "$lib/ui/MainNavigator.svelte";
+  import type { ChartData } from "$lib/services/charts";
   import { onMount } from "svelte";
-  import { donationService } from "../../services/donation-service";
-  import { generateByCandidate, generateByMethod, getMarkerLayer } from "../../services/donation-utils";
-  import LeafletMap from "$lib/LeafletMap.svelte";
-  import DonateForm from "$lib/DonateForm.svelte";
-  import DonationList from "$lib/DonationList.svelte";
-  import type { Candidate, Donation } from "../../services/donation-types";
-  import { latestDonation } from "../../stores";
+  import { generateMarker, generateByCandidate } from "$lib/services/donation-utils";
+  import LeafletMap from "$lib/ui/LeafletMap.svelte";
+  import DonateForm from "$lib/ui/DonateForm.svelte";
+  import DonationList from "$lib/ui/DonationList.svelte";
+  import type { Donation } from "$lib/services/donation-types";
+  import { latestDonation } from "$lib/stores";
+
+  export let data: any;
 
   let byCandidate: ChartData;
-  let candidateList: Candidate[] = [];
-  let donations: Donation[] = [];
   let map: LeafletMap;
 
-  async function refreshDashboard() {
-    donations = await donationService.getDonations();
-    candidateList = await donationService.getCandidates();
-    const donationMarkerLayer = getMarkerLayer(donations);
-    if (donations.length > 0) {
-      const donationsByCandidate = await donationService.getDonationsByCandidates();
-      byCandidate = generateByCandidate(donationsByCandidate);
-      map.populateLayer(donationMarkerLayer);
-      const lastMarker = donationMarkerLayer.markerSpecs[donationMarkerLayer.markerSpecs.length - 1];
-      map.moveTo(lastMarker.location, 8);
-    }
-  }
-
   onMount(async () => {
-    donationService.checkPageRefresh();
-    await refreshDashboard();
+    byCandidate = generateByCandidate(data.donationsByCandidate);
+    map.populateLayer(data.donationMarkerLayer);
+    const lastMarker = data.donationMarkerLayer.markerSpecs[data.donationMarkerLayer.markerSpecs.length - 1];
+    map.moveTo(lastMarker.location, 8);
   });
 
+  let donations: Donation[] = data.donations;
   latestDonation.subscribe(async (donation) => {
-    await refreshDashboard();
+    if (donation) {
+      donations.push(donation);
+      donations = [...donations];
+      const marker = generateMarker(donation);
+      //map.addPopupMarkerAndZoom("donations", marker);
+      map.addMarker(marker);
+    }
   });
 </script>
 
@@ -52,7 +47,7 @@
   </div>
   <div class="column box has-text-centered">
     <h1 class="title is-4">Donations to date</h1>
-    <DonateForm {candidateList} />
+    <DonateForm candidateList={data.candidateList} />
   </div>
 </div>
 <div class="columns">

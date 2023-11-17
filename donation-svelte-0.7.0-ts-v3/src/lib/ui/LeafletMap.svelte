@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   import type { LatLng, Control, Layer, LayerGroup, Map as LeafletMap, Marker } from "leaflet";
   import L from "leaflet";
-  import type { MarkerLayer, MarkerSpec } from "../services/markers";
-  import { markerSelected } from "../stores";
+  import type { MarkerLayer, MarkerSpec } from "$lib/services/markers";
+  import { markerSelected } from "$lib/stores";
 
   export let id = "home-map-id";
   export let height = 80;
@@ -47,23 +47,32 @@
     }
   }
 
+  export function addAndZoom(layer: string, marker: MarkerSpec) {
+    if (imap) {
+      addPopup(layer, marker.title, marker.location);
+      moveTo(marker.location, 15);
+      invalidateSize();
+    }
+  }
+
   export function populateLayer(markerLayer: MarkerLayer) {
     let group = L.layerGroup([]);
     markerLayer.markerSpecs.forEach((markerSpec) => {
-      let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng]);
-      var newpopup = L.popup({ autoClose: false, closeOnClick: false });
-      if (markerSpec.popup) {
-        newpopup.setContent(markerSpec.title);
-      }
-      marker.bindPopup(newpopup);
-      marker.bindTooltip(markerSpec.title);
-      marker.addTo(group);
-      markerMap.set(marker, markerSpec);
-      marker.addTo(group).on("popupopen", (event: any) => {
-        const marker = event.popup._source;
-        const markerSpec = markerMap.get(marker);
-        markerSelected.set(markerSpec!);
-      });
+      addMarkerToGroup(markerSpec, group);
+      // let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng]);
+      // var newpopup = L.popup({ autoClose: false, closeOnClick: false });
+      // if (markerSpec.popup) {
+      //   newpopup.setContent(markerSpec.title);
+      // }
+      // marker.bindPopup(newpopup);
+      // marker.bindTooltip(markerSpec.title);
+      // marker.addTo(group);
+      // markerMap.set(marker, markerSpec);
+      // marker.addTo(group).on("popupopen", (event: any) => {
+      //   const marker = event.popup._source;
+      //   const markerSpec = markerMap.get(marker);
+      //   markerSelected.set(markerSpec!);
+      // });
     });
     addLayer(markerLayer.title, group);
     control.addOverlay(group, markerLayer.title);
@@ -90,6 +99,34 @@
     } else {
       imap.flyTo(location, zoom);
     }
+  }
+
+  export function addMarkerToGroup(markerSpec: MarkerSpec, group: any) {
+    let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng]);
+    var newpopup = L.popup({ autoClose: false, closeOnClick: false });
+    if (markerSpec.popup) {
+      newpopup.setContent(markerSpec.title);
+    }
+    marker.bindPopup(newpopup);
+    marker.bindTooltip(markerSpec.title);
+    marker.addTo(group);
+    markerMap.set(marker, markerSpec);
+    marker.addTo(group).on("popupopen", (event: any) => {
+      const marker = event.popup._source;
+      const markerSpec = markerMap.get(marker);
+      markerSelected.set(markerSpec!);
+    });
+  }
+
+  export function addMarker(markerSpec: MarkerSpec) {
+    let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng]);
+    var newpopup = L.popup({ autoClose: false, closeOnClick: false });
+    if (markerSpec.popup) {
+      newpopup.setContent(markerSpec.title);
+    }
+    marker.bindPopup(newpopup);
+    marker.bindTooltip(markerSpec.title);
+    markerMap.set(marker, markerSpec);
   }
 
   function addPopup(layerTitle: string, content: string, location: LatLng) {

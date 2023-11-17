@@ -1,9 +1,11 @@
-import type { LatLng } from "leaflet";
-
+export interface LatLng {
+  lat: number;
+  lng: number;
+}
 export interface MarkerSpec {
   id: string;
   title: string;
-  location: LatLng;
+  location: any;
   popup: boolean;
 }
 
