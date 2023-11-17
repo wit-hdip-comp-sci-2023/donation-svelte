@@ -1,10 +1,10 @@
 <script lang="ts">
   import { beforeUpdate } from "svelte";
-  import { donationService } from "../services/donation-service";
+  import { donationService } from "$lib/services/donation-service";
 
-  // beforeUpdate(() => {
-  //   donationService.reload();
-  // });
+  beforeUpdate(() => {
+    donationService.checkPageRefresh();
+  });
 </script>
 
 <div class="container">

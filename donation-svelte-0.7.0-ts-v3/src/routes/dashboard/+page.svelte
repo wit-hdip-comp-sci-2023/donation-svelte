@@ -1,17 +1,17 @@
 <script lang="ts">
   // @ts-ignore
   import Chart from "svelte-frappe-charts";
-  import Header from "$lib/ui/Header.svelte";
-  import MainNavigator from "$lib/ui/MainNavigator.svelte";
-  import type { ChartData } from "$lib/services/charts";
+  import Header from "$lib/Header.svelte";
+  import MainNavigator from "$lib/MainNavigator.svelte";
+  import type { ChartData } from "../../services/charts";
   import { onMount } from "svelte";
-  import { donationService } from "$lib/services/donation-service";
-  import { generateByCandidate, generateByMethod, getMarkerLayer } from "$lib/services/donation-utils";
-  import LeafletMap from "$lib/ui/LeafletMap.svelte";
-  import DonateForm from "$lib/ui/DonateForm.svelte";
-  import DonationList from "$lib/ui/DonationList.svelte";
-  import type { Candidate, Donation } from "$lib/services/donation-types";
-  import { latestDonation } from "$lib/stores";
+  import { donationService } from "../../services/donation-service";
+  import { generateByCandidate, generateByMethod, getMarkerLayer } from "../../services/donation-utils";
+  import LeafletMap from "$lib/LeafletMap.svelte";
+  import DonateForm from "$lib/DonateForm.svelte";
+  import DonationList from "$lib/DonationList.svelte";
+  import type { Candidate, Donation } from "../../services/donation-types";
+  import { latestDonation } from "../../stores";
 
   let byCandidate: ChartData;
   let candidateList: Candidate[] = [];

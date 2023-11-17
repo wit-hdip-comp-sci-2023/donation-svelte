@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import Header from "$lib/Header.svelte";
-  import { donationService } from "../../services/donation-service";
-  import WelcomeNavigator from "$lib/WelcomeNavigator.svelte";
+  import Header from "$lib/ui/Header.svelte";
+  import WelcomeNavigator from "$lib/ui/WelcomeNavigator.svelte";
   import LoginForm from "./LoginForm.svelte";
 </script>
 
