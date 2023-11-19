@@ -30,11 +30,13 @@
     if (donation) {
       donations.push(donation);
       donations = [...donations];
-      const marker = generateMarker(donation);
-      map.addMarkerToGroup(marker, group);
-      map.moveTo(marker.location, 15);
       const donationsByCandidate = await donationService.getDonationsByCandidates();
       byCandidate = generateByCandidate(donationsByCandidate);
+      if (map) {
+        const marker = generateMarker(donation);
+        map.addMarkerToGroup(marker, group);
+        map.moveTo(marker.location, 15);
+      }
     }
   });
 </script>
