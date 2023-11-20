@@ -1,3 +1,5 @@
+import type { Database, DatabaseReference } from "firebase/database";
+
 export interface User {
   firstName: string;
   lastName: string;
@@ -32,6 +34,25 @@ export interface Donation {
 export interface CandidateDonations {
   candidate: Candidate;
   donations: Donation[];
+}
+
+export interface Store {
+  ref: DatabaseReference;
+  setDatabase(database: Database): void;
+  find(): Promise<unknown[]>;
+  findOne(id: string): Promise<unknown>;
+  findBy(obj: unknown): Promise<unknown>;
+  add(obj: unknown): Promise<unknown>;
+  deleteOne(id: string): Promise<void>;
+  delete(): Promise<void>;
+  edit(obj: unknown): Promise<void>;
+}
+
+export interface Db {
+  candidateStore: Store;
+  donationStore: Store;
+  userStore: Store;
+  init(type: string): void;
 }
 
 export interface DonationService {
