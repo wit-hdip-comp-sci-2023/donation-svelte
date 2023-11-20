@@ -1,71 +1,43 @@
-import { ref, set, push, get, child, update, remove, query, orderByChild, equalTo } from "firebase/database";
-import type { User } from "../donation-types.js";
-import { database } from "./firebase.js";
+import { ref, set, child, remove, Database, type DatabaseReference } from "firebase/database";
+import { find, findOne, add, findBy, edit } from "./firebase-utils.js";
+import type { Store, User } from "../donation-types.js";
 
-const usersRef = ref(database, "users");
+export const userStore: Store = {
+  ref: <DatabaseReference>{},
 
-export const userStore = {
-  async getAllUsers(): Promise<User[]> {
-    const snapshot = await get(usersRef);
-    const users = Array<User>();
-    snapshot.forEach((childSnapshot) => {
-      const childKey = childSnapshot.key;
-      const childData = childSnapshot.val();
-      users.push({ _id: childKey, ...childData });
-    });
+  setDatabase(database: Database) {
+    this.ref = ref(database, "users");
+  },
+
+  async find(): Promise<User[]> {
+    const users = (await find(this.ref)) as User[];
     return users;
   },
 
-  async getUserById(id: string): Promise<User | null> {
-    if (id) {
-      const userRef = child(usersRef, id);
-      const snapshot = await get(userRef);
-      if (snapshot.exists()) {
-        return { _id: id, ...snapshot.val() };
-      }
-    }
-    return null;
+  async findOne(id: string): Promise<User> {
+    const user = (await findOne(this.ref, id)) as User;
+    return user;
   },
 
-  async addUser(user: User): Promise<User> {
-    const newUserRef = push(usersRef);
-    await set(newUserRef, user);
-    const newUser = (await get(newUserRef)).val();
-    newUser._id = newUserRef.key;
-    return newUser;
+  async add(obj: User): Promise<User> {
+    const user = (await add(this.ref, obj)) as User;
+    return user;
   },
 
-  async getUserByEmail(email: string): Promise<User | null> {
-    const emailQuery = query(usersRef, orderByChild("email"), equalTo(email));
-    const snapshot = await get(emailQuery);
-    const users = Array<User>();
-    snapshot.forEach((childSnapshot) => {
-      const childKey = childSnapshot.key;
-      const childData = childSnapshot.val();
-      users.push({ _id: childKey, ...childData });
-    });
-    // Check if the result array has any elements, if so - return result[0], otherwise return null
+  async findBy(email: string): Promise<User | null> {
+    const users = (await findBy(this.ref, "email", email)) as User[];
     return users.length ? users[0] : null;
   },
 
-  async deleteUserById(id: string) {
-    await remove(child(usersRef, id));
+  async deleteOne(id: string): Promise<void> {
+    await remove(child(this.ref, id));
   },
 
-  async deleteAllUsers() {
-    await set(usersRef, {});
+  async delete(): Promise<void> {
+    await set(this.ref, {});
   },
 
-  async editUser(user: User) {
-    // Thanks to https://stackoverflow.com/questions/56298481/how-to-fix-object-null-prototype-title-product
-    const fixedUser = JSON.parse(JSON.stringify(user));
-    const userId = fixedUser._id;
-    // Don't update the _id.
-    delete fixedUser._id;
-
-    // Update the user
-    const userRef = child(usersRef, userId);
-
-    await update(userRef, fixedUser);
+  async edit(user: unknown): Promise<void> {
+    await edit(this.ref, user);
   }
 };

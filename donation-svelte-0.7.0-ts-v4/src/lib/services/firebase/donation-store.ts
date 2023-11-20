@@ -1,59 +1,51 @@
-import { ref, set, push, get, query, orderByChild, equalTo } from "firebase/database";
+import { ref, set, type DatabaseReference, remove, child } from "firebase/database";
+import { find, add, findBy, findOne, edit } from "./firebase-utils.js";
 import { userStore } from "./user-store.js";
 import { candidateStore } from "./candidate-store.js";
-import { database } from "./firebase.js";
-import type { Donation } from "../donation-types.js";
+import type { Candidate, Donation, Store, User } from "../donation-types.js";
 
-const donationsRef = ref(database, "donations");
+export const donationStore: Store = {
+  ref: <DatabaseReference>{},
 
-export const donationStore = {
-  async getAllDonations(): Promise<Donation[]> {
-    const snapshot = await get(donationsRef);
-    const donations = Array<Donation>();
-    snapshot.forEach((childSnapshot) => {
-      const childKey = childSnapshot.key;
-      const donation = childSnapshot.val();
-      donations.push({ _id: childKey, ...donation });
-    });
+  setDatabase(database) {
+    this.ref = ref(database, "donations");
+  },
+
+  async find(): Promise<Donation[]> {
+    const donations = (await find(this.ref)) as Donation[];
     for (let i = 0; i < donations.length; i += 1) {
-      donations[i].donor = await userStore.getUserById(donations[i].donor as string);
-      donations[i].candidate = await candidateStore.getCandidateById(donations[i].candidate as string);
+      donations[i].donor = (await userStore.findOne(donations[i].donor as string)) as User;
+      donations[i].candidate = (await candidateStore.findOne(donations[i].candidate as string)) as Candidate;
     }
     return donations;
   },
 
-  async getDonationsByCandidate(id: string) {
-    const donorQuery = query(donationsRef, orderByChild("candidate"), equalTo(id));
-    const snapshot = await get(donorQuery);
+  async findOne(id: string): Promise<Donation> {
+    const donation = (await findOne(this.ref, id)) as Donation;
+    return donation;
+  },
 
-    const donations = Array<Donation>();
-    snapshot.forEach((childSnapshot) => {
-      const childKey = childSnapshot.key;
-      const childData = childSnapshot.val();
-      donations.push({ _id: childKey, ...childData });
-    });
+  async findBy(id: string): Promise<Donation[]> {
+    const donations = (await findBy(this.ref, "candidate", id)) as Donation[];
     return donations;
   },
 
-  async donate(amount: number, method: string, donor: string, candidate: string, lat: number, lng: number): Promise<Donation> {
-    const donation = {
-      amount,
-      method,
-      donor,
-      candidate,
-      lat: lat,
-      lng: lng
-    };
-    const newDonationRef = push(donationsRef);
-    await set(newDonationRef, donation);
-    const newDonation = (await get(newDonationRef)).val();
-    newDonation._id = newDonationRef.key;
-    newDonation.donor = await userStore.getUserById(newDonation.donor as string);
-    newDonation.candidate = await candidateStore.getCandidateById(newDonation.candidate as string);
+  async add(donation: Donation): Promise<Donation> {
+    const newDonation = (await add(this.ref, donation)) as Donation;
+    newDonation.donor = (await userStore.findOne(donation.donor as string)) as User;
+    newDonation.candidate = (await candidateStore.findOne(donation.candidate as string)) as Candidate;
     return newDonation;
   },
 
-  async deleteAll() {
-    await set(donationsRef, {});
+  async delete(): Promise<void> {
+    await set(this.ref, {});
+  },
+
+  async deleteOne(id: string): Promise<void> {
+    await remove(child(this.ref, id));
+  },
+
+  async edit(candidate: unknown): Promise<void> {
+    await edit(this.ref, candidate);
   }
 };
