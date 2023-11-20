@@ -1,8 +1,8 @@
 import axios from "axios";
 import { latestDonation, loggedInUser } from "$lib/stores";
-import type { Candidate, CandidateDonations, Donation, donationService } from "../donation-types";
+import type { Candidate, CandidateDonations, Donation, DonationService } from "../donation-types";
 
-export const donationServiceApi: donationService = {
+export const donationServiceApi: DonationService = {
   baseUrl: "http://localhost:4000",
 
   async login(email: string, password: string): Promise<boolean> {
