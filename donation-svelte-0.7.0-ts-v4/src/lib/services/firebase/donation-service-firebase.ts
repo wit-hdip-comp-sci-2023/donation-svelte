@@ -1,14 +1,12 @@
 import { latestDonation, loggedInUser } from "$lib/stores";
-import type { Candidate, CandidateDonations, Donation, DonationService } from "../donation-types";
-import { userStore } from "./user-store";
-import { donationStore } from "./donation-store";
-import { candidateStore } from "./candidate-store";
+import type { Candidate, CandidateDonations, Donation, DonationService, User } from "../donation-types";
+import { db } from "../db";
 
 export const donationServiceFirebase: DonationService = {
   baseUrl: "http://localhost:4000",
 
   async login(email: string, password: string): Promise<boolean> {
-    const user = await userStore.getUserByEmail(email);
+    const user = (await db.userStore.findBy(email)) as User;
     if (!user || user.password !== password) {
       return false;
     }
@@ -37,7 +35,7 @@ export const donationServiceFirebase: DonationService = {
       email: email,
       password: password
     };
-    await userStore.addUser(userDetails);
+    await db.userStore.add(userDetails);
     return true;
   },
 
@@ -54,33 +52,41 @@ export const donationServiceFirebase: DonationService = {
   },
 
   async donate(amount: number, method: string, donorId: string, candidateId: string, lat: number, lng: number): Promise<Donation> {
-    const donation = await donationStore.donate(amount, method, donorId, candidateId, lat, lng);
-    latestDonation.set(donation);
-    return donation;
+    const donation = {
+      amount,
+      method,
+      donor: donorId,
+      candidate: candidateId,
+      lat: lat,
+      lng: lng
+    };
+    const newDonation = (await db.donationStore.add(donation)) as Donation;
+    latestDonation.set(newDonation);
+    return newDonation;
   },
 
   async getCandidates(): Promise<Candidate[]> {
-    const candidates = await candidateStore.getAllCandidates();
+    const candidates = (await db.candidateStore.find()) as Candidate[];
     return candidates;
   },
 
   async getDonations(): Promise<Donation[]> {
-    const donations = await donationStore.getAllDonations();
+    const donations = (await db.donationStore.find()) as Donation[];
     return donations;
   },
 
   async getDonationsByCandidate(candidate: Candidate): Promise<Donation[]> {
-    const donations = await donationStore.getDonationsByCandidate(candidate._id);
+    const donations = (await db.donationStore.findBy(candidate._id)) as Donation[];
     return donations;
   },
 
   async getDonationsByCandidates(): Promise<CandidateDonations[]> {
     const donationsByCandidate: CandidateDonations[] = [];
-    const candidates = await candidateStore.getAllCandidates();
+    const candidates = (await db.candidateStore.find()) as Candidate[];
     for (let i = 0; i < candidates.length; i++) {
       const donations = {
         candidate: candidates[i],
-        donations: await donationStore.getDonationsByCandidate(candidates[i]._id)
+        donations: (await db.donationStore.findBy(candidates[i]._id)) as Donation[]
       };
       donationsByCandidate.push(donations);
     }

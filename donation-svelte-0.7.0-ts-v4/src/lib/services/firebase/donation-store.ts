@@ -31,15 +31,6 @@ export const donationStore: Store = {
   },
 
   async add(donation: Donation): Promise<Donation> {
-    //async donate(amount, method, donorId, candidateId, lat, lng) {
-    // const donation = {
-    //   amount,
-    //   method,
-    //   donor: donorId,
-    //   candidate: candidateId,
-    //   lat: lat,
-    //   lng: lng
-    // };
     const newDonation = (await add(this.ref, donation)) as Donation;
     newDonation.donor = (await userStore.findOne(donation.donor as string)) as User;
     newDonation.candidate = (await candidateStore.findOne(donation.candidate as string)) as Candidate;

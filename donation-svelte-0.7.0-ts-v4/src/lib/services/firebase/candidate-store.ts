@@ -1,6 +1,6 @@
 import { ref, set, child, remove, type DatabaseReference, Database } from "firebase/database";
 import { find, findOne, edit, add, findBy } from "./firebase-utils.js";
-import type { Candidate, Store, User } from "../donation-types.js";
+import type { Candidate, Store } from "../donation-types.js";
 
 export const candidateStore: Store = {
   ref: <DatabaseReference>{},
