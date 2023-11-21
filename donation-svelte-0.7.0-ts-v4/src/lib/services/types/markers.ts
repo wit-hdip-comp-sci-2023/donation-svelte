@@ -1,15 +1,15 @@
-export interface LatLng {
+export type LatLng = {
   lat: number;
   lng: number;
-}
-export interface MarkerSpec {
+};
+export type MarkerSpec = {
   id: string;
   title: string;
   location: any;
   popup: boolean;
-}
+};
 
-export interface MarkerLayer {
+export type MarkerLayer = {
   title: string;
   markerSpecs: MarkerSpec[];
-}
+};

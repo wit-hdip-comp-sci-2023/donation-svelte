@@ -1,10 +1,10 @@
-import type { Db, Store } from "./donation-types";
+import type { DataStores, Store } from "./types/donation-types";
 import { connectFirebase } from "./firebase/connect";
 import type { Auth } from "firebase/auth";
 
 export let auth: Auth;
 
-export const db: Db = {
+export const dataStores: DataStores = {
   userStore: <Store>{},
   donationStore: <Store>{},
   candidateStore: <Store>{},
@@ -19,4 +19,4 @@ export const db: Db = {
   }
 };
 
-db.init("firebase");
+dataStores.init("firebase");

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { donationService } from "$lib/services/donation-service";
+  import { authService } from "$lib/services/donation-service";
 
   let firstName = "";
   let lastName = "";
@@ -10,9 +10,9 @@
 
   async function signup() {
     console.log(`attemting to sign up email: ${email}`);
-    let success = await donationService.signup(firstName, lastName, email, password);
+    let success = await authService.signup(firstName, lastName, email, password);
     if (success) {
-      goto("/");
+      goto("/donate");
     } else {
       errorMessage = "Error Trying to sign up";
     }

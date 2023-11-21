@@ -4,7 +4,7 @@ import { Database, getDatabase } from "firebase/database";
 import { userStore } from "./user-store";
 import { donationStore } from "./donation-store";
 import { candidateStore } from "./candidate-store";
-import type { Db } from "../donation-types";
+import type { DataStores } from "../types/donation-types";
 import { getAuth, type Auth } from "firebase/auth";
 
 export let firebaseApp: FirebaseApp;
@@ -18,18 +18,18 @@ const firebaseConfig = {
   authDomain: PUBLIC_FIREBASE_AUTH_DOMAIN
 };
 
-export function connectFirebase(db: Db) {
+export function connectFirebase(dataStore: DataStores) {
   if (!getApps().length) {
     firebaseApp = initializeApp(firebaseConfig);
     firebaseAuth = getAuth(firebaseApp);
     firebaseDatabase = getDatabase(firebaseApp);
   }
 
-  db.userStore = userStore;
-  db.candidateStore = candidateStore;
-  db.donationStore = donationStore;
+  dataStore.userStore = userStore;
+  dataStore.candidateStore = candidateStore;
+  dataStore.donationStore = donationStore;
 
-  db.userStore.setDatabase(firebaseDatabase);
-  db.candidateStore.setDatabase(firebaseDatabase);
-  db.donationStore.setDatabase(firebaseDatabase);
+  dataStore.userStore.setDatabase(firebaseDatabase);
+  dataStore.candidateStore.setDatabase(firebaseDatabase);
+  dataStore.donationStore.setDatabase(firebaseDatabase);
 }

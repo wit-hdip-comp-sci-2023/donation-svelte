@@ -1,6 +1,6 @@
 import axios from "axios";
 import { latestDonation, loggedInUser } from "$lib/stores";
-import type { Candidate, CandidateDonations, Donation, DonationService } from "../donation-types";
+import type { Candidate, CandidateDonations, Donation, DonationService } from "../types/donation-types";
 
 export const donationServiceApi: DonationService = {
   baseUrl: "http://localhost:4000",
@@ -65,7 +65,7 @@ export const donationServiceApi: DonationService = {
     }
   },
 
-  async donate(amount: number, method: string, donor: string, candidate: string, lat: number, lng: number) {
+  async donate(amount: number, method: string, donor: string, candidate: string, lat: number, lng: number): Promise<Donation | null> {
     try {
       const donation = {
         amount,
@@ -77,9 +77,9 @@ export const donationServiceApi: DonationService = {
       };
       const response = await axios.post(this.baseUrl + "/api/candidates/" + donation.candidate + "/donations", donation);
       latestDonation.set(response.data as Donation);
-      return response.status == 200;
+      return response.data;
     } catch (error) {
-      return false;
+      return null;
     }
   },
 

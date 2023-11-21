@@ -3,8 +3,6 @@ import { generateByCandidate, populateMarkerLayer } from "$lib/services/donation
 export const ssr = false;
 
 export const load = async () => {
-  //donationService.checkPageRefresh();
-
   const donations = await donationService.getDonations();
   const candidateList = await donationService.getCandidates();
   const donationsByCandidate = await donationService.getDonationsByCandidates();

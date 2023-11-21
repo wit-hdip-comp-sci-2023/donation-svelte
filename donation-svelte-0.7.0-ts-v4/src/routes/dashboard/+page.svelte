@@ -3,13 +3,13 @@
   import Chart from "svelte-frappe-charts";
   import Header from "$lib/ui/Header.svelte";
   import MainNavigator from "$lib/ui/MainNavigator.svelte";
-  import type { ChartData } from "$lib/services/charts";
+  import type { ChartData } from "$lib/services/types/charts";
   import { onMount } from "svelte";
   import { generateMarker, generateByCandidate } from "$lib/services/donation-utils";
   import LeafletMap from "$lib/ui/LeafletMap.svelte";
   import DonateForm from "$lib/ui/DonateForm.svelte";
   import DonationList from "$lib/ui/DonationList.svelte";
-  import type { Donation } from "$lib/services/donation-types";
+  import type { Donation } from "$lib/services/types/donation-types";
   import { latestDonation } from "$lib/stores";
   import { donationService } from "$lib/services/donation-service";
 

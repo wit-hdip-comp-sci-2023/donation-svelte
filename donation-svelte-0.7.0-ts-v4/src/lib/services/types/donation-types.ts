@@ -49,7 +49,7 @@ export type Store = {
   edit(obj: unknown): Promise<void>;
 };
 
-export type Db = {
+export type DataStores = {
   candidateStore: Store;
   donationStore: Store;
   userStore: Store;
@@ -58,13 +58,16 @@ export type Db = {
 
 export type DonationService = {
   baseUrl?: string;
-  login(email: string, password: string): Promise<boolean>;
-  logout(): void;
-  signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean>;
-  checkPageRefresh(): void;
-  donate(amount: number, method: string, donorId: string, candidateId: string, lat: number, lng: number): Promise<Donation>;
+
+  donate(amount: number, method: string, donorId: string, candidateId: string, lat: number, lng: number): Promise<Donation | null>;
   getCandidates(): Promise<Candidate[]>;
   getDonations(): Promise<Donation[]>;
   getDonationsByCandidate(candidate: Candidate): Promise<Donation[]>;
   getDonationsByCandidates(): Promise<CandidateDonations[]>;
+};
+
+export type AuthService = {
+  login(email: string, password: string): Promise<boolean>;
+  logout(): void;
+  signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean>;
 };

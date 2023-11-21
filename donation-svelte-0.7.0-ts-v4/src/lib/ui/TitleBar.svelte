@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { session } from "$lib/stores";
+  import { loggedInUser } from "$lib/stores";
   export let title = "";
   export let subTitle = "";
 </script>
@@ -14,8 +14,8 @@
   </div>
   <div class="column">
     <i class="fas fa-donate fa-3x" style="color:rgb(95, 96, 173)" />
-    {#if $session?.loggedIn}
-      <div class="is-size-7">{$session.user?.email}</div>
+    {#if $loggedInUser?.email}
+      <div class="is-size-7">{$loggedInUser.email}</div>
     {:else}
       <div class="is-size-7">Donation-Svelte 0.2</div>
     {/if}

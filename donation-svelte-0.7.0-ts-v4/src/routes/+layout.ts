@@ -1,12 +1,12 @@
 import { browser } from "$app/environment";
-import { db } from "$lib/services/db";
+import { dataStores } from "$lib/services/dataStores";
 import { firebaseAuth } from "$lib/services/firebase/connect";
 import { onAuthStateChanged } from "firebase/auth";
 
 export async function load({ url }) {
   if (browser) {
     try {
-      db.init("firebase");
+      dataStores.init("firebase");
     } catch (ex) {
       console.error(ex);
     }
