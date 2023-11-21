@@ -1,17 +1,28 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { donationService } from "$lib/services/donation-service";
+  import { firebaseAuth } from "$lib/services/firebase/connect";
+  import { session } from "$lib/stores";
+  import { signInWithEmailAndPassword } from "firebase/auth";
 
   let email = "";
   let password = "";
   let errorMessage = "";
 
   async function login() {
-    console.log(`attemting to log in email: ${email} with password: ${password}`);
-    let success = await donationService.login(email, password);
-    if (success) {
+    try {
+      const result = await signInWithEmailAndPassword(firebaseAuth, email, password);
+      const user = result.user;
+      session.set({
+        loggedIn: true,
+        user: {
+          displayName: user?.displayName,
+          email: user?.email,
+          photoURL: user?.photoURL,
+          uid: user?.uid
+        }
+      });
       goto("/donate");
-    } else {
+    } catch (error) {
       email = "";
       password = "";
       errorMessage = "Invalid Credentials";

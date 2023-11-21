@@ -24,7 +24,7 @@
           {donation.candidate.lastName}, {donation.candidate.firstName}
         </td>
         <td>
-          {donation.donor.email}
+          {donation.donor}
         </td>
       </tr>
     {/each}

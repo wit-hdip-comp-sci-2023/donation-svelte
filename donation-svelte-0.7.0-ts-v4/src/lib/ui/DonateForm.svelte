@@ -1,7 +1,7 @@
 <script lang="ts">
   import { donationService } from "$lib/services/donation-service";
   import type { Candidate } from "$lib/services/donation-types";
-  import { loggedInUser } from "$lib/stores";
+  import { loggedInUser, session } from "$lib/stores";
   import Coordinates from "$lib/ui/Coordinates.svelte";
 
   export let candidateList: Candidate[] = [];
@@ -19,7 +19,7 @@
       const candidateNames = selectedCandidate.split(",");
       const candidate = candidateList.find((candidate) => candidate.lastName == candidateNames[0] && candidate.firstName == candidateNames[1]);
       if (candidate) {
-        const donation = await donationService.donate(amount, selectedMethod, $loggedInUser._id, candidate._id, lat, lng);
+        const donation = await donationService.donate(amount, selectedMethod, $session.user?.email!, candidate._id, lat, lng);
         if (!donation) {
           message = "Donation not completed - some error occurred";
           return;

@@ -14,7 +14,7 @@ export const donationStore: Store = {
   async find(): Promise<Donation[]> {
     const donations = (await find(this.ref)) as Donation[];
     for (let i = 0; i < donations.length; i += 1) {
-      donations[i].donor = (await userStore.findOne(donations[i].donor as string)) as User;
+      // donations[i].donor = (await userStore.findOne(donations[i].donor as string)) as User;
       donations[i].candidate = (await candidateStore.findOne(donations[i].candidate as string)) as Candidate;
     }
     return donations;
@@ -32,7 +32,7 @@ export const donationStore: Store = {
 
   async add(donation: Donation): Promise<Donation> {
     const newDonation = (await add(this.ref, donation)) as Donation;
-    newDonation.donor = (await userStore.findOne(donation.donor as string)) as User;
+    //newDonation.donor = (await userStore.findOne(donation.donor as string)) as User;
     newDonation.candidate = (await candidateStore.findOne(donation.candidate as string)) as Candidate;
     return newDonation;
   },
