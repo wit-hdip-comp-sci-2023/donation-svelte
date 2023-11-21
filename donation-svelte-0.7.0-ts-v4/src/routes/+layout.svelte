@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
   import { loggedInUser } from "$lib/stores";
+  import { goto } from "$app/navigation";
   export let data: LayoutData;
 
   onMount(async () => {
@@ -12,6 +13,8 @@
         token: user.refreshToken,
         _id: user.uid
       });
+    } else {
+      goto("/");
     }
   });
 </script>

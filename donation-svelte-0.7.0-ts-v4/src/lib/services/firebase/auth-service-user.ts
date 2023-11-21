@@ -33,7 +33,7 @@ export const authServiceUser: AuthService = {
       email: email,
       password: password
     };
-    await db.userStore.add(userDetails);
+    await dataStores.userStore.add(userDetails);
     return true;
   }
 };
