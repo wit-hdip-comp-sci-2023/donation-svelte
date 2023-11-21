@@ -53,7 +53,6 @@ export type DataStores = {
   candidateStore: Store;
   donationStore: Store;
   userStore: Store;
-  init(type: string): void;
 };
 
 export type DonationService = {
@@ -70,4 +69,5 @@ export type AuthService = {
   login(email: string, password: string): Promise<boolean>;
   logout(): void;
   signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean>;
+  onLoad(): void;
 };

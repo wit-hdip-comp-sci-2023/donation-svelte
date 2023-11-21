@@ -1,7 +1,20 @@
 import { loggedInUser } from "$lib/stores";
 import type { AuthService } from "../types/donation-types";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { firebaseAuth } from "./connect";
+import { goto } from "$app/navigation";
+
+// onAuthStateChanged(firebaseAuth, (user) => {
+//   if (user) {
+//     loggedInUser.set({
+//       email: user.email!,
+//       token: user.refreshToken,
+//       _id: user.uid
+//     });
+//   } else {
+//     goto("/");
+//   }
+// });
 
 export const authServiceFb: AuthService = {
   async login(email: string, password: string): Promise<boolean> {
@@ -45,5 +58,19 @@ export const authServiceFb: AuthService = {
       return false;
     }
     return true;
+  },
+
+  onLoad(): void {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      if (user) {
+        loggedInUser.set({
+          email: user.email!,
+          token: user.refreshToken,
+          _id: user.uid
+        });
+      } else {
+        goto("/");
+      }
+    });
   }
 };
