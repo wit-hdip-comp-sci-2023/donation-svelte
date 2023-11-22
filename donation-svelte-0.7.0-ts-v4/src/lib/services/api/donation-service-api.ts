@@ -1,6 +1,6 @@
 import axios from "axios";
 import { latestDonation, loggedInUser } from "$lib/stores";
-import type { Candidate, CandidateDonations, Donation, DonationService } from "../types/donation-types";
+import type { Candidate, CandidateDonations, Donation, DonationService } from "../types/donation-services";
 
 export const donationServiceApi: DonationService = {
   baseUrl: "http://localhost:4000",

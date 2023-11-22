@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { donationService } from "$lib/services/donation-service";
-  import type { Candidate } from "$lib/services/types/donation-types";
+  import { donationService } from "$lib/services/services";
+  import type { Candidate } from "$lib/services/types/donation-stores";
   import { loggedInUser } from "$lib/stores";
   import Coordinates from "$lib/ui/Coordinates.svelte";
 

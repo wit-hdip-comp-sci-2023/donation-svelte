@@ -1,4 +1,4 @@
-import { donationService } from "$lib/services/donation-service";
+import { donationService } from "$lib/services/services";
 import { generateByCandidate, generateByMethod } from "$lib/services/donation-utils";
 export const ssr = false;
 

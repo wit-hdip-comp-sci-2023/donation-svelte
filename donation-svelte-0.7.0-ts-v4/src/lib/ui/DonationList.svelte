@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Donation } from "$lib/services/types/donation-types";
+  import type { Donation } from "$lib/services/types/donation-stores";
 
   export let donations: Donation[];
 </script>

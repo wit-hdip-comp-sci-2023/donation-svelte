@@ -1,4 +1,4 @@
-import { donationService } from "$lib/services/donation-service";
+import { donationService } from "$lib/services/services";
 import { generateByCandidate, populateMarkerLayer } from "$lib/services/donation-utils";
 export const ssr = false;
 

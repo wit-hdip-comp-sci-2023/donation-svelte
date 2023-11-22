@@ -1,6 +1,6 @@
 import axios from "axios";
 import { loggedInUser } from "$lib/stores";
-import type { AuthService } from "../types/donation-types";
+import type { AuthService } from "../types/donation-services";
 
 const baseUrl = "http://localhost:4000";
 

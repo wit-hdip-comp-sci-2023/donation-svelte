@@ -1,4 +1,4 @@
-import { donationService } from "$lib/services/donation-service";
+import { donationService } from "$lib/services/services";
 export const ssr = false;
 
 export const load = async () => {

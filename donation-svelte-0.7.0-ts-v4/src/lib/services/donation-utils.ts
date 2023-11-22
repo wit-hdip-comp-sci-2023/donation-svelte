@@ -1,5 +1,6 @@
 import type { ChartData } from "./types/charts";
-import type { CandidateDonations, Donation } from "./types/donation-types";
+import type { CandidateDonations, Donation } from "./types/donation-stores";
+
 import type { MarkerLayer, MarkerSpec } from "./types/markers";
 
 export function generateMarker(donation: Donation): MarkerSpec {

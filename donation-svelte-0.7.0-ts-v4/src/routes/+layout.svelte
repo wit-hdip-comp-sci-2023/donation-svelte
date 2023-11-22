@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { authService } from "$lib/services/donation-service";
+  import { authService } from "$lib/services/services";
 
   onMount(async () => {
     authService.onLoad();

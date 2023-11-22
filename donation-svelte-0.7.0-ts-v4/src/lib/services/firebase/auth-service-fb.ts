@@ -1,76 +1,52 @@
 import { loggedInUser } from "$lib/stores";
-import type { AuthService } from "../types/donation-types";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { firebaseAuth } from "./connect";
-import { goto } from "$app/navigation";
-
-// onAuthStateChanged(firebaseAuth, (user) => {
-//   if (user) {
-//     loggedInUser.set({
-//       email: user.email!,
-//       token: user.refreshToken,
-//       _id: user.uid
-//     });
-//   } else {
-//     goto("/");
-//   }
-// });
+import type { AuthService } from "../types/donation-services";
+import type { User } from "../types/donation-stores";
+import { userStore } from "./user-store";
 
 export const authServiceFb: AuthService = {
   async login(email: string, password: string): Promise<boolean> {
-    try {
-      const result = await signInWithEmailAndPassword(firebaseAuth, email, password);
-      const user = result.user;
-      loggedInUser.set({
-        email: user.email!,
-        token: user.refreshToken,
-        _id: user.uid
-      });
-    } catch (error) {
+    const user = (await userStore.findBy(email)) as User;
+    if (!user || user.password !== password) {
       return false;
     }
+    loggedInUser.set({
+      email: email,
+      token: "",
+      _id: user._id!
+    });
+    localStorage.donation = JSON.stringify({ email: email, _id: user._id });
     return true;
   },
 
   async logout(): Promise<void> {
-    try {
-      await signOut(firebaseAuth);
-      loggedInUser.set({
-        email: "",
-        token: "",
-        _id: ""
-      });
-    } catch (error) {
-      console.log("error logging out");
-    }
+    loggedInUser.set({
+      email: "",
+      token: "",
+      _id: ""
+    });
+    localStorage.removeItem("donation");
   },
 
   async signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean> {
-    try {
-      const result = await createUserWithEmailAndPassword(firebaseAuth, email, password);
-      const user = result.user;
-      loggedInUser.set({
-        email: user.email!,
-        token: user.refreshToken,
-        _id: user.uid
-      });
-    } catch (error) {
-      return false;
-    }
+    const userDetails = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    };
+    await userStore.add(userDetails);
     return true;
   },
 
-  onLoad(): void {
-    onAuthStateChanged(firebaseAuth, (user) => {
-      if (user) {
-        loggedInUser.set({
-          email: user.email!,
-          token: user.refreshToken,
-          _id: user.uid
-        });
-      } else {
-        goto("/");
-      }
-    });
+  onLoad() {
+    const donationCredentials = localStorage.donation;
+    if (donationCredentials) {
+      const savedUser = JSON.parse(donationCredentials);
+      loggedInUser.set({
+        email: savedUser.email,
+        token: savedUser.token,
+        _id: savedUser._id
+      });
+    }
   }
 };
