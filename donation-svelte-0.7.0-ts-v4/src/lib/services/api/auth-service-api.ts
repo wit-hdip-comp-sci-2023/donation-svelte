@@ -48,20 +48,20 @@ export const AuthServiceApi: AuthService = {
     } catch (error) {
       return false;
     }
-  }
+  },
 
-  // checkPageRefresh() {
-  //   if (!axios.defaults.headers.common["Authorization"]) {
-  //     const donationCredentials = localStorage.donation;
-  //     if (donationCredentials) {
-  //       const savedUser = JSON.parse(donationCredentials);
-  //       loggedInUser.set({
-  //         email: savedUser.email,
-  //         token: savedUser.token,
-  //         _id: savedUser._id
-  //       });
-  //       axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
-  //     }
-  //   }
-  // }
+  onLoad() {
+    if (!axios.defaults.headers.common["Authorization"]) {
+      const donationCredentials = localStorage.donation;
+      if (donationCredentials) {
+        const savedUser = JSON.parse(donationCredentials);
+        loggedInUser.set({
+          email: savedUser.email,
+          token: savedUser.token,
+          _id: savedUser._id
+        });
+        axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
+      }
+    }
+  }
 };

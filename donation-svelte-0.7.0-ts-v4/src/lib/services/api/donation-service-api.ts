@@ -1,71 +1,14 @@
 import axios from "axios";
-import { latestDonation, loggedInUser } from "$lib/stores";
-import type { Candidate, CandidateDonations, Donation, DonationService } from "../types/donation-services";
+import { latestDonation } from "$lib/stores";
+import type { DonationService } from "../types/donation-services";
+import type { Candidate, CandidateDonations, Donation } from "../types/donation-stores";
+import { authService } from "../services";
 
 export const donationServiceApi: DonationService = {
   baseUrl: "http://localhost:4000",
 
-  async login(email: string, password: string): Promise<boolean> {
-    try {
-      const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
-      axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-      if (response.data.success) {
-        loggedInUser.set({
-          email: email,
-          token: response.data.token,
-          _id: response.data.id
-        });
-        localStorage.donation = JSON.stringify({ email: email, token: response.data.token });
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  },
-
-  async logout() {
-    loggedInUser.set({
-      email: "",
-      token: "",
-      _id: ""
-    });
-    axios.defaults.headers.common["Authorization"] = "";
-    localStorage.removeItem("donation");
-  },
-
-  async signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean> {
-    try {
-      const userDetails = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password
-      };
-      await axios.post(this.baseUrl + "/api/users", userDetails);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  },
-
-  checkPageRefresh() {
-    if (!axios.defaults.headers.common["Authorization"]) {
-      const donationCredentials = localStorage.donation;
-      if (donationCredentials) {
-        const savedUser = JSON.parse(donationCredentials);
-        loggedInUser.set({
-          email: savedUser.email,
-          token: savedUser.token,
-          _id: savedUser._id
-        });
-        axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
-      }
-    }
-  },
-
   async donate(amount: number, method: string, donor: string, candidate: string, lat: number, lng: number): Promise<Donation | null> {
+    authService.onLoad();
     try {
       const donation = {
         amount,
@@ -84,6 +27,7 @@ export const donationServiceApi: DonationService = {
   },
 
   async getCandidates(): Promise<Candidate[]> {
+    authService.onLoad();
     try {
       const response = await axios.get(this.baseUrl + "/api/candidates");
       return response.data;
@@ -93,6 +37,7 @@ export const donationServiceApi: DonationService = {
   },
 
   async getDonations(): Promise<Donation[]> {
+    authService.onLoad();
     try {
       const response = await axios.get(this.baseUrl + "/api/donations");
       return response.data;
@@ -102,6 +47,7 @@ export const donationServiceApi: DonationService = {
   },
 
   async getDonationsByCandidate(candidate: Candidate): Promise<Donation[]> {
+    authService.onLoad();
     try {
       const response = await axios.get(`${this.baseUrl}/api/candidates/${candidate._id}/donations`);
       return response.data;
@@ -111,6 +57,7 @@ export const donationServiceApi: DonationService = {
   },
 
   async getDonationsByCandidates(): Promise<CandidateDonations[]> {
+    authService.onLoad();
     const donationsByCandidate: CandidateDonations[] = [];
     const candidates = await donationServiceApi.getCandidates();
     for (let i = 0; i < candidates.length; i++) {
