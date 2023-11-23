@@ -1,21 +1,16 @@
 <script lang="ts">
-  import Header from "$lib/ui/Header.svelte";
-  import WelcomeNavigator from "$lib/ui/WelcomeNavigator.svelte";
   import LoginForm from "./LoginForm.svelte";
 </script>
 
-<Header>
-  <WelcomeNavigator />
-</Header>
-
-<div class="columns">
-  <div class="column has-text-centered">
-    <img alt="homer" src="/homer2.png" width="300" />
-  </div>
-  <div class="column">
-    <div class="box">
-      <h1 class="title">Login</h1>
-      <LoginForm />
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="column is-4 is-offset-4">
+        <h3 class="title has-text-black has-text-centered">Login to DONATION</h3>
+        <div class="box">
+          <LoginForm />
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>

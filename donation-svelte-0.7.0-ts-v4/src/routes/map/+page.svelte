@@ -1,8 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import Header from "$lib/ui/Header.svelte";
   import LeafletMap from "$lib/ui/LeafletMap.svelte";
-  import MainNavigator from "$lib/ui/MainNavigator.svelte";
+  import Heading from "$lib/ui/common/Heading.svelte";
   import { onMount } from "svelte";
   export let data: any;
 
@@ -15,7 +14,6 @@
   });
 </script>
 
-<Header>
-  <MainNavigator />
-</Header>
-<LeafletMap bind:this={map} />
+<Heading title="Donation" />
+
+<LeafletMap title="Donation Locations" bind:this={map} />
