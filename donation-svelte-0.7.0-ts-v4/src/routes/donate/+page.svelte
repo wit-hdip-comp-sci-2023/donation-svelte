@@ -3,7 +3,7 @@
   import DonationList from "$lib/ui/DonationList.svelte";
   import { latestDonation } from "$lib/stores";
   import type { Donation } from "$lib/services/types/donation-stores";
-  import Heading from "$lib/ui/common/Heading.svelte";
+  import Heading from "$lib/ui/Heading.svelte";
 
   export let data: any;
 

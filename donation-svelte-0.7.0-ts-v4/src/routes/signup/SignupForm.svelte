@@ -1,9 +1,9 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { authService } from "$lib/services/services";
-  import UserCredentials from "$lib/ui/forms/UserCredentials.svelte";
-  import UserDetails from "$lib/ui/forms/UserDetails.svelte";
-  import Message from "$lib/ui/common/Message.svelte";
+  import UserCredentials from "$lib/ui/UserCredentials.svelte";
+  import UserDetails from "$lib/ui/UserDetails.svelte";
+  import Message from "$lib/ui/Message.svelte";
 
   let firstName = "";
   let lastName = "";

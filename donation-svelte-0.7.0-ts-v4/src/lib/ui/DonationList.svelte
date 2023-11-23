@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Donation } from "$lib/services/types/donation-stores";
-  import Card from "./common/Card.svelte";
+  import Card from "./Card.svelte";
 
   export let donations: Donation[];
 </script>

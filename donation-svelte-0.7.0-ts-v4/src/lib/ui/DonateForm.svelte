@@ -3,8 +3,8 @@
   import type { Candidate } from "$lib/services/types/donation-stores";
   import { loggedInUser } from "$lib/stores";
   import Coordinates from "$lib/ui/Coordinates.svelte";
-  import Card from "./common/Card.svelte";
-  import Message from "$lib/ui/common/Message.svelte";
+  import Card from "./Card.svelte";
+  import Message from "$lib/ui/Message.svelte";
 
   export let candidateList: Candidate[] = [];
 

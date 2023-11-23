@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { authService } from "$lib/services/services";
-  import Message from "$lib/ui/common/Message.svelte";
-  import UserCredentials from "$lib/ui/forms/UserCredentials.svelte";
+  import Message from "$lib/ui/Message.svelte";
+  import UserCredentials from "$lib/ui/UserCredentials.svelte";
 
   let email = "";
   let password = "";

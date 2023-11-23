@@ -4,7 +4,7 @@
   import L from "leaflet";
   import type { MarkerLayer, MarkerSpec } from "$lib/services/types/markers";
   import { markerSelected } from "$lib/stores";
-  import Card from "./common/Card.svelte";
+  import Card from "./Card.svelte";
 
   export let title = "";
   export let id = "home-map-id";

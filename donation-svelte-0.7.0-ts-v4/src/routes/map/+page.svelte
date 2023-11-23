@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import LeafletMap from "$lib/ui/LeafletMap.svelte";
-  import Heading from "$lib/ui/common/Heading.svelte";
+  import Heading from "$lib/ui/Heading.svelte";
   import { onMount } from "svelte";
   export let data: any;
 

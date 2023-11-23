@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { authService } from "$lib/services/services";
   import { loggedInUser } from "$lib/stores";
-  import Menu from "$lib/ui/common/Menu.svelte";
+  import Menu from "$lib/ui/Menu.svelte";
 
   onMount(async () => {
     authService.onLoad();

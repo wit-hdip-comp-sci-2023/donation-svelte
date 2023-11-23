@@ -1,8 +1,8 @@
 <script lang="ts">
   // @ts-ignore
   import Chart from "svelte-frappe-charts";
-  import Heading from "$lib/ui/common/Heading.svelte";
-  import Card from "$lib/ui/common/Card.svelte";
+  import Heading from "$lib/ui/Heading.svelte";
+  import Card from "$lib/ui/Card.svelte";
   export let data: any;
 </script>
 

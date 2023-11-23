@@ -8,8 +8,8 @@
   import DonateForm from "$lib/ui/DonateForm.svelte";
   import { latestDonation } from "$lib/stores";
   import { donationService } from "$lib/services/services";
-  import Heading from "$lib/ui/common/Heading.svelte";
-  import Card from "$lib/ui/common/Card.svelte";
+  import Heading from "$lib/ui/Heading.svelte";
+  import Card from "$lib/ui/Card.svelte";
   import type { Donation } from "$lib/services/types/donation-stores";
   import DonationList from "$lib/ui/DonationList.svelte";
 
