@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { donationService } from "$lib/services/donation-service";
+  import { authService } from "$lib/services/services";
 
   let email = "";
   let password = "";
@@ -8,7 +8,7 @@
 
   async function login() {
     console.log(`attemting to log in email: ${email} with password: ${password}`);
-    let success = await donationService.login(email, password);
+    let success = await authService.login(email, password);
     if (success) {
       goto("/donate");
     } else {

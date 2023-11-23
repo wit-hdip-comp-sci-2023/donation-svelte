@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import type { LatLng, Control, Layer, LayerGroup, Map as LeafletMap, Marker } from "leaflet";
   import L from "leaflet";
-  import type { MarkerLayer, MarkerSpec } from "$lib/services/markers";
+  import type { MarkerLayer, MarkerSpec } from "$lib/services/types/markers";
   import { markerSelected } from "$lib/stores";
 
   export let id = "home-map-id";

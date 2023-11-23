@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { db } from "$lib/services/db";
-  import { donationService } from "$lib/services/donation-service";
-  import { beforeUpdate } from "svelte";
+  import { onMount } from "svelte";
+  import { authService } from "$lib/services/services";
 
-  beforeUpdate(() => {
-    donationService.checkPageRefresh();
+  onMount(async () => {
+    authService.onLoad();
   });
 </script>
 

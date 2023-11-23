@@ -2,10 +2,10 @@
   import Header from "$lib/ui/Header.svelte";
   import MainNavigator from "$lib/ui/MainNavigator.svelte";
 
-  import type { Donation } from "$lib/services/donation-types";
   import DonateForm from "$lib/ui/DonateForm.svelte";
   import DonationList from "$lib/ui/DonationList.svelte";
   import { latestDonation } from "$lib/stores";
+  import type { Donation } from "$lib/services/types/donation-stores";
 
   export let data: any;
 

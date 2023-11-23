@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import Header from "$lib/ui/Header.svelte";
   import LeafletMap from "$lib/ui/LeafletMap.svelte";
   import MainNavigator from "$lib/ui/MainNavigator.svelte";
@@ -8,7 +9,9 @@
   let map: LeafletMap;
 
   onMount(async () => {
-    map.populateLayer(data.donationMarkerLayer);
+    if (browser) {
+      map.populateLayer(data.donationMarkerLayer);
+    }
   });
 </script>
 

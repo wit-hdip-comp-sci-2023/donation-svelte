@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Donation } from "$lib/services/donation-types";
+  import type { Donation } from "$lib/services/types/donation-stores";
 
   export let donations: Donation[];
 </script>
@@ -24,7 +24,7 @@
           {donation.candidate.lastName}, {donation.candidate.firstName}
         </td>
         <td>
-          {donation.donor.email}
+          {donation.donor}
         </td>
       </tr>
     {/each}

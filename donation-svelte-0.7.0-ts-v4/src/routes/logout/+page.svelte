@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { donationService } from "$lib/services/donation-service";
+  import { authService } from "$lib/services/services";
 
-  donationService.logout();
+  authService.logout();
   goto("/");
 </script>
