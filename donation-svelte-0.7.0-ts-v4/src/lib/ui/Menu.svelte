@@ -6,7 +6,7 @@
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="/dashboard">
-        <span class="icon"> <i class="fas fa-map-marker-alt"></i></span><span class="icon mr-1"> <i class="fas fa-film"></i></span><span><strong>Donation</strong></span>
+        <span class="icon"> <i class="fas fa-map-marker-alt"></i></span><span class="icon mr-1"> <i class="far fa-money-bill-alt"></i></span><span><strong>Donation</strong></span>
       </a>
     </div>
     <div id="navbarMenu" class="navbar-menu">

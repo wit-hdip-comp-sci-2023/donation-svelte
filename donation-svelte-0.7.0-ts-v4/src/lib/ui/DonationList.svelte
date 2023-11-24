@@ -21,8 +21,7 @@
           </td>
           <td>
             {donation.method}
-          </td>
-          <td>
+          </td><td>
             {donation.candidate.lastName}, {donation.candidate.firstName}
           </td>
           <td>
@@ -33,3 +32,16 @@
     </tbody>
   </table>
 </Card>
+
+<style>
+  thead,
+  tbody {
+    display: block;
+  }
+
+  tbody {
+    height: 40vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+</style>

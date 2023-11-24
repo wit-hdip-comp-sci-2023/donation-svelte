@@ -1,8 +1,6 @@
 <script lang="ts">
-  // @ts-ignore
-  import Chart from "svelte-frappe-charts";
   import Heading from "$lib/ui/Heading.svelte";
-  import Card from "$lib/ui/Card.svelte";
+  import DonationChart from "$lib/ui/DonationChart.svelte";
   export let data: any;
 </script>
 
@@ -10,13 +8,9 @@
 
 <div class="columns">
   <div class="column">
-    <Card title="Donations By Method">
-      <Chart data={data.byMethod} type="bar" />
-    </Card>
+    <DonationChart title="Donations By Candidate" data={data.byCandidate} type="pie" />
   </div>
   <div class="column">
-    <Card title="Donations By Candidate">
-      <Chart data={data.byCandidate} type="pie" />
-    </Card>
+    <DonationChart title="Donations By Method" data={data.byMethod} type="bar" />
   </div>
 </div>

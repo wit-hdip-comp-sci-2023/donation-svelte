@@ -1,6 +1,4 @@
 <script lang="ts">
-  // @ts-ignore
-  import Chart from "svelte-frappe-charts";
   import type { ChartData } from "$lib/services/types/charts";
   import { onMount } from "svelte";
   import { generateMarker, generateByCandidate } from "$lib/services/donation-utils";
@@ -9,9 +7,9 @@
   import { latestDonation } from "$lib/stores";
   import { donationService } from "$lib/services/services";
   import Heading from "$lib/ui/Heading.svelte";
-  import Card from "$lib/ui/Card.svelte";
   import type { Donation } from "$lib/services/types/donation-stores";
   import DonationList from "$lib/ui/DonationList.svelte";
+  import DonationChart from "$lib/ui/DonationChart.svelte";
 
   export let data: any;
 
@@ -45,9 +43,7 @@
 
 <div class="columns p-4">
   <div class="column">
-    <Card title="Donations By Candidate">
-      <Chart data={data.byCandidate} type="pie" />
-    </Card>
+    <DonationChart title="Donations By Candidate" data={data.byCandidate} type="pie" />
   </div>
   <div class="column">
     <DonateForm candidateList={data.candidateList} />
