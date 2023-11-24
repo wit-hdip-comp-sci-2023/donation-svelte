@@ -1,22 +1,16 @@
 <script lang="ts">
-  // @ts-ignore
-  import Chart from "svelte-frappe-charts";
-  import Header from "$lib/ui/Header.svelte";
-  import MainNavigator from "$lib/ui/MainNavigator.svelte";
+  import Heading from "$lib/ui/Heading.svelte";
+  import DonationChart from "$lib/ui/DonationChart.svelte";
   export let data: any;
 </script>
 
-<Header>
-  <MainNavigator />
-</Header>
+<Heading title="Charts" />
 
 <div class="columns">
-  <div class="column box has-text-centered">
-    <h1 class="title is-4">Donations By Method</h1>
-    <Chart data={data.byMethod} type="bar" />
+  <div class="column">
+    <DonationChart title="Donations By Candidate" data={data.byCandidate} type="pie" />
   </div>
-  <div class="column box has-text-centered">
-    <h1 class="title is-4">Donations to date</h1>
-    <Chart data={data.byCandidate} type="pie" />
+  <div class="column">
+    <DonationChart title="Donations By Method" data={data.byMethod} type="bar" />
   </div>
 </div>

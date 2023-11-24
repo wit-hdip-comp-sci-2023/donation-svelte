@@ -1,17 +1,15 @@
 <script lang="ts">
-  // @ts-ignore
-  import Chart from "svelte-frappe-charts";
-  import Header from "$lib/ui/Header.svelte";
-  import MainNavigator from "$lib/ui/MainNavigator.svelte";
   import type { ChartData } from "$lib/services/types/charts";
   import { onMount } from "svelte";
   import { generateMarker, generateByCandidate } from "$lib/services/donation-utils";
   import LeafletMap from "$lib/ui/LeafletMap.svelte";
   import DonateForm from "$lib/ui/DonateForm.svelte";
-  import DonationList from "$lib/ui/DonationList.svelte";
-  import type { Donation } from "$lib/services/types/donation-services";
   import { latestDonation } from "$lib/stores";
   import { donationService } from "$lib/services/services";
+  import Heading from "$lib/ui/Heading.svelte";
+  import type { Donation } from "$lib/services/types/donation-stores";
+  import DonationList from "$lib/ui/DonationList.svelte";
+  import DonationChart from "$lib/ui/DonationChart.svelte";
 
   export let data: any;
 
@@ -41,27 +39,21 @@
   });
 </script>
 
-<Header>
-  <MainNavigator />
-</Header>
+<Heading title="Analytics" />
 
 <div class="columns p-4">
-  <div class="column box has-text-centered">
-    <h1 class="title is-4">Donations By Method</h1>
-    <Chart data={byCandidate} type="pie" />
+  <div class="column">
+    <DonationChart title="Donations By Candidate" data={data.byCandidate} type="pie" />
   </div>
-  <div class="column box has-text-centered">
-    <h1 class="title is-4">Donations to date</h1>
+  <div class="column">
     <DonateForm candidateList={data.candidateList} />
   </div>
 </div>
 <div class="columns">
-  <div class="column box has-text-centered">
-    <h1 class="title is-4">Donations By Method</h1>
-    <LeafletMap height={40} bind:this={map} />
+  <div class="column">
+    <LeafletMap title="Donation Locations" height={40} bind:this={map} />
   </div>
-  <div class="column box has-text-centered">
-    <h1 class="title is-4">Donations to date</h1>
+  <div class="column">
     <DonationList {donations} />
   </div>
 </div>

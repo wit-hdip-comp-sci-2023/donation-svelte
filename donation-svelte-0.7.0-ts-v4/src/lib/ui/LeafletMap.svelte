@@ -4,7 +4,9 @@
   import L from "leaflet";
   import type { MarkerLayer, MarkerSpec } from "$lib/services/types/markers";
   import { markerSelected } from "$lib/stores";
+  import Card from "./Card.svelte";
 
+  export let title = "";
   export let id = "home-map-id";
   export let height = 80;
   export let location = { lat: 53.2734, lng: -7.7783203 };
@@ -135,4 +137,6 @@
   }
 </script>
 
-<div {id} class="box" style="height: {height}vh" />
+<Card {title}>
+  <div {id} class="box" style="height: {height}vh" />
+</Card>

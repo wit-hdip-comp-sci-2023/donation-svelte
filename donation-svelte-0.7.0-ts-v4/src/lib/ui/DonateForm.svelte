@@ -3,6 +3,8 @@
   import type { Candidate } from "$lib/services/types/donation-stores";
   import { loggedInUser } from "$lib/stores";
   import Coordinates from "$lib/ui/Coordinates.svelte";
+  import Card from "./Card.svelte";
+  import Message from "$lib/ui/Message.svelte";
 
   export let candidateList: Candidate[] = [];
 
@@ -12,7 +14,7 @@
   let selectedCandidate = "";
   let paymentMethods = ["paypal", "direct"];
   let selectedMethod = "";
-  let message = "Please donate";
+  let message = "";
 
   async function donate() {
     if (selectedCandidate && amount && selectedMethod) {
@@ -32,34 +34,36 @@
   }
 </script>
 
-<form on:submit|preventDefault={donate}>
-  <div class="field">
-    <label class="label" for="amount">Enter Amount</label>
-    <input bind:value={amount} class="input" id="amount" name="amount" type="number" />
-  </div>
-  <div class="field">
-    <div class="control">
-      {#each paymentMethods as method}
-        <input bind:group={selectedMethod} class="radio" type="radio" value={method} /> {method}
-      {/each}
+<Card title="Make a Donation">
+  {#if message}
+    <Message {message} />
+  {/if}
+  <form on:submit|preventDefault={donate}>
+    <div class="field">
+      <label class="label" for="amount">Enter Amount</label>
+      <input bind:value={amount} class="input" id="amount" name="amount" type="number" />
     </div>
-  </div>
-  <div class="field">
-    <div class="select">
-      <select bind:value={selectedCandidate}>
-        {#each candidateList as candidate}
-          <option>{candidate.lastName},{candidate.firstName}</option>
+    <div class="field">
+      <div class="control">
+        {#each paymentMethods as method}
+          <input bind:group={selectedMethod} class="radio" type="radio" value={method} /> {method}
         {/each}
-      </select>
+      </div>
     </div>
-  </div>
-  <Coordinates bind:lat bind:lng />
-  <div class="field">
-    <div class="control">
-      <button class="button is-link is-light">Donate</button>
+    <div class="field">
+      <div class="select">
+        <select bind:value={selectedCandidate}>
+          {#each candidateList as candidate}
+            <option>{candidate.lastName},{candidate.firstName}</option>
+          {/each}
+        </select>
+      </div>
     </div>
-  </div>
-  <div class="box">
-    {message}
-  </div>
-</form>
+    <Coordinates bind:lat bind:lng />
+    <div class="field">
+      <div class="control">
+        <button class="button is-success is-fullwidth">Donate</button>
+      </div>
+    </div>
+  </form>
+</Card>
