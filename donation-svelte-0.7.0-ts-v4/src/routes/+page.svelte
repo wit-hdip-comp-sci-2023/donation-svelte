@@ -22,7 +22,7 @@
               <span class="icon"><i class="fas fa-plus"></i></span><span>Sign Up</span>
             </a>
             <a class="button is-medium is-link" href="/login">
-              <span class="icon"><i class="fas fa-sign-in"></i></span><span>Login</span>
+              <span class="icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span>Login</span>
             </a>
           </p>
         </div>
